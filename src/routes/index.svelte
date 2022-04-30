@@ -129,7 +129,7 @@
 					updateCode(terms);
 				}}>利用規約</button
 			>
-			<a class="link-btn" target="_blank" href="https://github.com/K-Sato1995/es5-playground-kit"
+			<a class="link-btn link" target="_blank" href="https://github.com/K-Sato1995/es5-playground-kit"
 				>GitHub</a
 			>
 		</div>
@@ -261,6 +261,10 @@
 		outline: none;
 		background: none;
 		cursor: pointer;
+	}
+
+	.link {
+		margin-left: 5px;
 	}
 
 	.run-btn {
