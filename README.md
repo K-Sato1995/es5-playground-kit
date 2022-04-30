@@ -1,1 +1,1 @@
-## ES5(ECMAScript5)までしか使えなくてつらいJavaScript Playground
+## ES5(ECMAScript5)までしか使えなくてつらい JavaScript Playground
