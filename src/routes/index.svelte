@@ -8,13 +8,16 @@
 	let editor;
 	let flask;
 	let errorMessages;
+
+	// let lintError;
+	// let executionError;
 	let code = defaultCode;
 	let consoleResult = [];
 
 	console.log = (data) => {
-		const arr = [...consoleResult, data]
-		consoleResult = arr
-	}
+		const arr = [...consoleResult, data];
+		consoleResult = arr;
+	};
 
 	onMount(() => {
 		const codeFlask = createEditor();
@@ -23,7 +26,7 @@
 			flask = codeFlask;
 			flask.updateCode(code);
 			subscribeToCodeUpdate();
-			consoleResult = []
+			consoleResult = [];
 		} else {
 			throw new Error('Failed to load the editor');
 		}
@@ -37,7 +40,7 @@
 	const subscribeToCodeUpdate = () => {
 		// Didn't read the library code.
 		flask.onUpdate((newCode) => {
-			code = newCode
+			code = newCode;
 			errorMessages = lint(newCode);
 		});
 	};
@@ -56,37 +59,45 @@
 
 	const run = () => {
 		const func = new Function(code);
-		func();
+
+		try {
+			func();
+		} catch (error) {
+			errorMessages = error.message;
+		}
 	};
 </script>
 
 <div class="main-container">
 	<div class="header">
-		ES5までしか使えなくてつらいJS Playground
-		<button
-			on:click={() => {
-				run();
-			}}>Run</button
-		>
-		<button
-			id=""
-			on:click={() => {
-				updateCode('');
-				consoleResult = []
-			}}>Clear</button
-		>
-		<button
-			id="about"
-			on:click={() => {
-				updateCode(about);
-			}}>About</button
-		>
-		<button
-			id=""
-			on:click={() => {
-				updateCode(terms);
-			}}>利用規約</button
-		>
+		<div class="title">ES5までしか使えなくてつらいJS Playground</div>
+		<div class="btns">
+			<button
+				class="link-btn"
+				on:click={() => {
+					updateCode(about);
+				}}>About</button
+			>
+			<button
+				class="link-btn"
+				on:click={() => {
+					updateCode(terms);
+				}}>利用規約</button
+			>
+			<button
+				class="run-btn"
+				on:click={() => {
+					run();
+				}}>Run</button
+			>
+			<button
+				class="clear-btn"
+				on:click={() => {
+					updateCode('');
+					consoleResult = [];
+				}}>Clear</button
+			>
+		</div>
 	</div>
 
 	<div bind:this={editor} id="editor" />
@@ -103,7 +114,7 @@
 		<span class="tag">Console</span>
 		{#each consoleResult as result}
 			<div class="console-message">{result}</div>
-    	{/each}
+		{/each}
 	</div>
 	<div class="footer">Footer</div>
 </div>
@@ -139,13 +150,14 @@
 
 	.header {
 		grid-area: header;
-		/* display: flex;
-		justify-content: center; */
 		display: flex;
 		align-items: center;
 		border-bottom: solid 1px var(--border-color);
 		background-color: var(--header-color);
 		color: var(--text-color);
+		letter-spacing: 0.7px;
+		justify-content: space-between;
+		padding: 0 20px;
 	}
 
 	#editor {
@@ -183,6 +195,7 @@
 		align-items: center;
 		border: solid 1px var(--header-color);
 		background-color: var(--header-color);
+		letter-spacing: 0.7px;
 	}
 
 	#result {
@@ -202,9 +215,36 @@
 	.footer {
 		grid-area: footer;
 		border-top: solid 1px var(--border-color);
-
 		background-color: var(--header-color);
 	}
 
-	/* Tokens */
+	.link-btn {
+		color: var(--text-color);
+		border: none;
+		outline: none;
+		background: none;
+		cursor: pointer;
+	}
+
+	.run-btn {
+		color: var(--text-color);
+		background-color: #1b8cfd;
+		padding: 0.5rem 1rem;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		font-size: bold;
+		margin-left: 10px;
+	}
+
+	.clear-btn {
+		color: var(--text-color);
+		background-color: var(--border-color);
+		padding: 0.5rem 1rem;
+		border: none;
+		outline: none;
+		cursor: pointer;
+		font-size: bold;
+		margin-left: 10px;
+	}
 </style>

@@ -1,5 +1,5 @@
 const about = `/* 
-About this site
+このサイトについて
 
 JavaScriptは今まで様々な成長を遂げながら、世界中で使用されてきました。
 特にES6では多くの機能が追加され大きな進化を遂げました。
@@ -21,6 +21,8 @@ Credits:
 const defaultCode = `/* 
 本PlayGroundでは、課題である「つらい」になぞらえて、
 今と比較してやや書くのがつらかったES5(2009年リリース)以前の記法のみが使用可能です。
+
+console.logの結果が右のConsoleに表示されます。
 (更に詳細を知りたい場合はAboutをクリックしてください)
 */
 const msg = "Hello World"
