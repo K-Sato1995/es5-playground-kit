@@ -111,8 +111,8 @@
 		display: grid;
 		grid-template:
 			'header header header header' 50px
-			'editor editor result result' 50%
-			'errors errors result result' 50%
+			'editor editor result result' 70%
+			'errors errors result result' 30%
 			'footer footer footer footer' 50px
 			/ 1fr 1fr 1fr;
 	}
