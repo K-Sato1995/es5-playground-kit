@@ -5,25 +5,39 @@
 
 	let editor;
 	let flask;
-	let defaultCode = `const msg = "Hello World"\n\nconst greeting = () => {\n  console.log(msg)\n}\n\ngreeting()\n\n`;
+    let errorMessages
+	let code = `const msg = "Hello World"\n\nconst greeting = () => {\n  console.log(msg)\n}\n\ngreeting()\n\n`;
 
 	onMount(() => {
 		const codeFlask = createEditor();
 
 		if (codeFlask) {
 			flask = codeFlask;
-			flask.updateCode(defaultCode);
+			flask.updateCode(code);
 			subscribeToCodeUpdate();
 		} else {
 			throw new Error('Failed to load the editor');
 		}
 	});
 
+	const clickAbout = () => {
+		code = `/* 
+    About this site 
+
+
+    Credits:
+     - CodeFlask: https://kazzkiq.github.io/CodeFlask/
+     - EsLint: https://eslint.org/
+*/
+  `;
+		flask.updateCode(code);
+	};
+
 	const subscribeToCodeUpdate = () => {
 		// Didn't read the library code.
 		flask.onUpdate((code) => {
-			const messages = lint(code);
-			console.log(messages);
+			errorMessages = lint(code);
+			console.log(errorMessages);
 		});
 	};
 
@@ -41,12 +55,18 @@
 
 <div class="main-container">
 	<div class="header">
-		ES5(ECMAScript5)までしか使えなくてつらいJavaScript Playground <button id="about">About</button>
+		ES5(ECMAScript5)までしか使えなくてつらいJavaScript Playground <button
+			id="about"
+			on:click={() => {
+				clickAbout();
+			}}>About</button
+		>
 	</div>
 
-	<div bind:this={editor} id="editor"/>
+	<div bind:this={editor} id="editor" />
 
 	<div id="lint-errors">
+        <code>{JSON.stringify(errorMessages)}</code>
 		<span class="erros-tag">Errors</span>
 	</div>
 	<div id="result">result</div>
@@ -54,7 +74,7 @@
 </div>
 
 <style>
-    :global(:root) {
+	:global(:root) {
 		font-family: Helvetica, Arial, sans-serif;
 		--main-color: #597eff;
 		--border-color: #e5e7eb;
@@ -62,7 +82,7 @@
 		--header-height: 50px;
 	}
 
-    :global(body) {
+	:global(body) {
 		margin: 0;
 		padding: 0;
 	}
