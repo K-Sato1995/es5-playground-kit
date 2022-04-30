@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { about, defaultCode, terms } from '$lib/texts.js';
 	import lint from '$lib/eslint/index.js';
+	import MediaQuery from "$lib/mediaQuery.svelte";
 	import '$lib/assets/highlight.css';
 
 	let editor;
@@ -72,6 +73,14 @@
 		}
 	};
 </script>
+
+<MediaQuery query="(max-width: 600px)" let:matches>
+	{#if matches}
+		<div class="mobile-warning">
+			<h1>⚠️スマートフォン(横幅600px以下)のデバイスには対応していません</h1>
+		</div>
+	{/if}
+</MediaQuery>
 
 <div class="main-container">
 	<div class="header">
@@ -153,6 +162,21 @@
 	:global(body) {
 		margin: 0;
 		padding: 0;
+	}
+
+	.mobile-warning {
+		position: absolute;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 30px;
+		top: 0;
+		bottom: 0;
+		right: 0;
+		left: 0;
+		font-size: bold;
+		background-color: #fff;
+		z-index: 100;
 	}
 
 	.main-container {
@@ -261,6 +285,7 @@
 		outline: none;
 		background: none;
 		cursor: pointer;
+		font-size: 1rem;
 	}
 
 	.link {
