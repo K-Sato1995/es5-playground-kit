@@ -61,6 +61,7 @@
 	const run = () => {
 		if (lintErrors.length !== 0) {
 			alert('未解決のエラーが存在します');
+			return;
 		}
 		const func = new Function(code);
 
