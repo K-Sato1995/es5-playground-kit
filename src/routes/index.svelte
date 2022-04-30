@@ -7,10 +7,10 @@
 
 	let editor;
 	let flask;
-	let errorMessages;
 
-	// let lintError;
-	// let executionError;
+	let lintErrors = [];
+	let executionErrors;
+
 	let code = defaultCode;
 	let consoleResult = [];
 
@@ -41,7 +41,7 @@
 		// Didn't read the library code.
 		flask.onUpdate((newCode) => {
 			code = newCode;
-			errorMessages = lint(newCode);
+			lintErrors = lint(newCode);
 		});
 	};
 
@@ -58,12 +58,15 @@
 	};
 
 	const run = () => {
+		if (lintErrors.length !== 0) {
+			alert('未解決のエラーが存在します');
+		}
 		const func = new Function(code);
 
 		try {
 			func();
 		} catch (error) {
-			errorMessages = error.message;
+			executionErrors = error.message;
 		}
 	};
 </script>
@@ -72,18 +75,6 @@
 	<div class="header">
 		<div class="title">ES5までしか使えなくてつらいJS Playground</div>
 		<div class="btns">
-			<button
-				class="link-btn"
-				on:click={() => {
-					updateCode(about);
-				}}>About</button
-			>
-			<button
-				class="link-btn"
-				on:click={() => {
-					updateCode(terms);
-				}}>利用規約</button
-			>
 			<button
 				class="run-btn"
 				on:click={() => {
@@ -103,10 +94,12 @@
 	<div bind:this={editor} id="editor" />
 
 	<div id="lint-errors">
-		{#if errorMessages && errorMessages.length === 0}
-			<p class="ready">Ready to Execute</p>
+		{#if executionErrors}
+			<code>ExecutionError: {executionErrors}</code>
+		{:else if lintErrors.length !== 0}
+			<code>LintError: {JSON.stringify(lintErrors)}</code>
 		{:else}
-			<code>{JSON.stringify(errorMessages)}</code>
+			<p class="ready">Lintエラーは見受けられません。実行してみましょう。</p>
 		{/if}
 		<span class="tag">Errors</span>
 	</div>

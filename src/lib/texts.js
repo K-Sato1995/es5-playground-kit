@@ -25,9 +25,9 @@ const defaultCode = `/*
 console.logの結果が右のConsoleに表示されます。
 (更に詳細を知りたい場合はAboutをクリックしてください)
 */
-const msg = "Hello World"
+var msg = "Hello World"
 
-const greeting = () => {
+function greeting() {
   console.log(msg)
 }
 
