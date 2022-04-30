@@ -35,7 +35,7 @@
 		});
 	};
 
-	function createEditor() {
+	const createEditor = () => {
 		if (editor) editor.innerHTML = '';
 
 		const flask = new CodeFlask(editor, {
@@ -45,13 +45,22 @@
 		});
 
 		return flask;
-	}
+	};
+
+	const run = () => {
+		const func = new Function(code);
+		func();
+	};
 </script>
 
 <div class="main-container">
 	<div class="header">
 		ES5までしか使えなくてつらいJS Playground
-		<button>Run</button>
+		<button
+			on:click={() => {
+				run();
+			}}>Run</button
+		>
 		<button
 			id=""
 			on:click={() => {
@@ -75,16 +84,16 @@
 	<div bind:this={editor} id="editor" />
 
 	<div id="lint-errors">
-        {#if errorMessages && errorMessages.length === 0}
-           <p class="ready">Ready to Execute</p>
-        {:else}
-            <code>{JSON.stringify(errorMessages)}</code>
-        {/if}
+		{#if errorMessages && errorMessages.length === 0}
+			<p class="ready">Ready to Execute</p>
+		{:else}
+			<code>{JSON.stringify(errorMessages)}</code>
+		{/if}
 		<span class="tag">Errors</span>
 	</div>
 	<div id="result">
-        <span class="tag">Console</span>
-    </div>
+		<span class="tag">Console</span>
+	</div>
 	<div class="footer">Footer</div>
 </div>
 
@@ -97,8 +106,8 @@
 		--header-height: 50px;
 		--header-color: #2e3138;
 		--background-color: #15181f;
-        --error-color: #e06c75;
-        --success-color: #4DC9B0;
+		--error-color: #e06c75;
+		--success-color: #4dc9b0;
 	}
 
 	:global(body) {
@@ -136,16 +145,16 @@
 		grid-area: errors;
 		position: relative;
 		border-top: solid 1px var(--border-color);
-        padding: 80px 10px 10px 10px;
+		padding: 80px 10px 10px 10px;
 		color: var(--error-color);
 		background-color: var(--background-color);
 	}
 
-    .ready {
-        color: var(--success-color);
-        padding: 0;
-        margin: 0;
-    }
+	.ready {
+		color: var(--success-color);
+		padding: 0;
+		margin: 0;
+	}
 
 	#lint-errors > code {
 		overflow-wrap: break-word;
@@ -156,19 +165,19 @@
 		position: absolute;
 		left: 0;
 		top: 0;
-        color: var(--text-color);
-        height: 40px;
-        padding: 0 1rem;
-        display: flex;
-        align-items: center;
-        border:solid 1px var(--header-color);
-        background-color: var(--header-color);
+		color: var(--text-color);
+		height: 40px;
+		padding: 0 1rem;
+		display: flex;
+		align-items: center;
+		border: solid 1px var(--header-color);
+		background-color: var(--header-color);
 	}
 
 	#result {
 		grid-area: result;
-        position: relative;
-        padding: 80px 10px 10px 10px;
+		position: relative;
+		padding: 80px 10px 10px 10px;
 		border-left: solid 1px var(--border-color);
 		background-color: var(--background-color);
 		color: var(--text-color);
