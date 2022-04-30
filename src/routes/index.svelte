@@ -1,6 +1,7 @@
 <script>
 	import CodeFlask from 'codeflask';
 	import { onMount } from 'svelte';
+	import lint from '$lib/eslint/index.js';
 
 	let editor;
 	let flask;
@@ -12,10 +13,19 @@
 		if (codeFlask) {
 			flask = codeFlask;
 			flask.updateCode(defaultCode);
+			subscribeToCodeUpdate();
 		} else {
 			throw new Error('Failed to load the editor');
 		}
 	});
+
+	const subscribeToCodeUpdate = () => {
+		// Didn't read the library code.
+		flask.onUpdate((code) => {
+			const messages = lint(code);
+			console.log(messages);
+		});
+	};
 
 	function createEditor() {
 		if (editor) editor.innerHTML = '';
