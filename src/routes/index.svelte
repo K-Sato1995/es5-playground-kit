@@ -41,7 +41,7 @@
 		// Didn't read the library code.
 		flask.onUpdate((newCode) => {
 			code = newCode;
-			executionErrors = ''
+			executionErrors = '';
 			lintErrors = lint(newCode);
 		});
 	};
@@ -92,7 +92,11 @@
 		</div>
 	</div>
 
-	<div bind:this={editor} id="editor" />
+	<div bind:this={editor} id="editor">
+		{#if !editor}
+			<div class="loading">Editorを読み込んでいます....</div>
+		{/if}
+	</div>
 
 	<div id="lint-errors">
 		{#if executionErrors}
@@ -172,6 +176,16 @@
 
 	#editor {
 		grid-area: editor;
+	}
+
+	.loading {
+		display: flex;
+		color: #fff;
+		height: 100%;
+		align-items: center;
+		justify-content: center;
+		background-color: var(--background-color);
+		font-size: 1.4rem;
 	}
 
 	#lint-errors {
