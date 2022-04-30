@@ -41,6 +41,7 @@
 		// Didn't read the library code.
 		flask.onUpdate((newCode) => {
 			code = newCode;
+			executionErrors = ''
 			lintErrors = lint(newCode);
 		});
 	};
