@@ -92,11 +92,11 @@
 		</div>
 	</div>
 
-	<div bind:this={editor} id="editor">
-		{#if !editor}
-			<div class="loading">Editorを読み込んでいます....</div>
-		{/if}
-	</div>
+	{#if !editor}
+		<div class="loading">Editorを読み込んでいます....</div>
+	{/if}
+
+	<div bind:this={editor} id="editor" />
 
 	<div id="lint-errors">
 		{#if executionErrors}
@@ -179,6 +179,7 @@
 	}
 
 	.loading {
+		grid-area: editor;
 		display: flex;
 		color: #fff;
 		height: 100%;
