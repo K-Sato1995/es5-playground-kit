@@ -128,10 +128,10 @@
 	}
 
 	#lint-errors {
-        padding-top: 80px;
 		grid-area: errors;
 		position: relative;
 		border-top: solid 1px var(--border-color);
+        padding: 80px 10px 10px 10px;
 		color: var(--error-color);
 		background-color: var(--background-color);
 	}
@@ -157,6 +157,7 @@
 	#result {
 		grid-area: result;
         position: relative;
+        padding: 80px 10px 10px 10px;
 		border-left: solid 1px var(--border-color);
 		background-color: var(--background-color);
 		color: var(--text-color);
