@@ -1,13 +1,16 @@
 <script>
 	import CodeFlask from 'codeflask';
 	import { onMount } from 'svelte';
-	import lint from '$lib/eslint/index.js';
+	import  { about,defaultCode } from '$lib/texts.js'
+    import lint from '$lib/eslint/index.js';
+
 
 	let editor;
 	let flask;
     let errorMessages
-	let code = `const msg = "Hello World"\n\nconst greeting = () => {\n  console.log(msg)\n}\n\ngreeting()\n\n`;
+	let code = defaultCode
 
+    
 	onMount(() => {
 		const codeFlask = createEditor();
 
@@ -21,16 +24,8 @@
 	});
 
 	const clickAbout = () => {
-		code = `/* 
-    About this site 
-
-
-    Credits:
-     - CodeFlask: https://kazzkiq.github.io/CodeFlask/
-     - EsLint: https://eslint.org/
-*/
-  `;
-		flask.updateCode(code);
+		code = about 
+        flask.updateCode(code);
 	};
 
 	const subscribeToCodeUpdate = () => {
