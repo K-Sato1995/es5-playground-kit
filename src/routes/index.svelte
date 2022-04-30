@@ -129,6 +129,9 @@
 					updateCode(terms);
 				}}>利用規約</button
 			>
+			<a class="link-btn" target="_blank" href="https://github.com/K-Sato1995/es5-playground-kit"
+				>GitHub</a
+			>
 		</div>
 		<div class="copy-right">Copyright© K-Sato All Rights Reserved.</div>
 	</div>
