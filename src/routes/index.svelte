@@ -116,7 +116,23 @@
 			<div class="console-message">{result}</div>
 		{/each}
 	</div>
-	<div class="footer">Footer</div>
+	<div class="footer">
+		<div class="footer-btns">
+			<button
+				class="link-btn"
+				on:click={() => {
+					updateCode(about);
+				}}>About</button
+			>
+			<button
+				class="link-btn"
+				on:click={() => {
+					updateCode(terms);
+				}}>利用規約</button
+			>
+		</div>
+		<div class="copy-right">Copyright© K-Sato All Rights Reserved.</div>
+	</div>
 </div>
 
 <style>
@@ -216,8 +232,16 @@
 		grid-area: footer;
 		border-top: solid 1px var(--border-color);
 		background-color: var(--header-color);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		letter-spacing: 0.7px;
+		padding: 0 20px;
 	}
 
+	.copy-right {
+		color: var(--text-color);
+	}
 	.link-btn {
 		color: var(--text-color);
 		border: none;
