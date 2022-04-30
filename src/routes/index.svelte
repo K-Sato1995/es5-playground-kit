@@ -53,10 +53,10 @@
 		ES5までしか使えなくてつらいJS Playground
 		<button>Run</button>
 		<button
-			id="about"
+			id=""
 			on:click={() => {
 				updateCode('');
-			}}>Reset</button
+			}}>Clear</button
 		>
 		<button
 			id="about"
@@ -65,7 +65,7 @@
 			}}>About</button
 		>
 		<button
-			id="about"
+			id=""
 			on:click={() => {
 				updateCode(terms);
 			}}>利用規約</button
@@ -76,9 +76,11 @@
 
 	<div id="lint-errors">
 		<code>{JSON.stringify(errorMessages)}</code>
-		<span class="erros-tag">Errors</span>
+		<span class="tag">Errors</span>
 	</div>
-	<div id="result">result</div>
+	<div id="result">
+        <span class="tag">Console</span>
+    </div>
 	<div class="footer">Footer</div>
 </div>
 
@@ -91,6 +93,7 @@
 		--header-height: 50px;
 		--header-color: #2e3138;
 		--background-color: #15181f;
+        --error-color: #e06c75;
 	}
 
 	:global(body) {
@@ -125,12 +128,11 @@
 	}
 
 	#lint-errors {
+        padding-top: 80px;
 		grid-area: errors;
 		position: relative;
-		border: solid 1px var(--border-color);
-		background: #fff;
-		color: #e06c75;
-
+		border-top: solid 1px var(--border-color);
+		color: var(--error-color);
 		background-color: var(--background-color);
 	}
 
@@ -139,18 +141,25 @@
 		word-break: break-all;
 	}
 
-	.erros-tag {
+	.tag {
 		position: absolute;
 		left: 0;
 		top: 0;
-		border: solid 1px;
+        color: var(--text-color);
+        height: 40px;
+        padding: 0 1rem;
+        display: flex;
+        align-items: center;
+        border:solid 1px var(--header-color);
+        background-color: var(--header-color);
 	}
 
 	#result {
 		grid-area: result;
-		border: solid 1px var(--border-color);
+        position: relative;
+		border-left: solid 1px var(--border-color);
 		background-color: var(--background-color);
-		color: #fff;
+		color: var(--text-color);
 	}
 
 	.footer {
