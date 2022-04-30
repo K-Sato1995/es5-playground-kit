@@ -75,7 +75,11 @@
 	<div bind:this={editor} id="editor" />
 
 	<div id="lint-errors">
-		<code>{JSON.stringify(errorMessages)}</code>
+        {#if errorMessages && errorMessages.length === 0}
+           <p class="ready">Ready to Execute</p>
+        {:else}
+            <code>{JSON.stringify(errorMessages)}</code>
+        {/if}
 		<span class="tag">Errors</span>
 	</div>
 	<div id="result">
@@ -94,6 +98,7 @@
 		--header-color: #2e3138;
 		--background-color: #15181f;
         --error-color: #e06c75;
+        --success-color: #4DC9B0;
 	}
 
 	:global(body) {
@@ -135,6 +140,12 @@
 		color: var(--error-color);
 		background-color: var(--background-color);
 	}
+
+    .ready {
+        color: var(--success-color);
+        padding: 0;
+        margin: 0;
+    }
 
 	#lint-errors > code {
 		overflow-wrap: break-word;
