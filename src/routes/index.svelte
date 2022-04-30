@@ -104,7 +104,7 @@
 		{:else if lintErrors.length !== 0}
 			<code>LintError: {JSON.stringify(lintErrors)}</code>
 		{:else}
-			<p class="ready">Lintエラーは見受けられません。実行してみましょう。</p>
+			<p class="ready">Lintエラーは見受けられません。右上のRunを押して実行してみましょう。</p>
 		{/if}
 		<span class="tag">Errors</span>
 	</div>
