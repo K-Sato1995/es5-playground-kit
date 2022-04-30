@@ -9,6 +9,12 @@
 	let flask;
 	let errorMessages;
 	let code = defaultCode;
+	let consoleResult = [];
+
+	console.log = (data) => {
+		const arr = [...consoleResult, data]
+		consoleResult = arr
+	}
 
 	onMount(() => {
 		const codeFlask = createEditor();
@@ -17,6 +23,7 @@
 			flask = codeFlask;
 			flask.updateCode(code);
 			subscribeToCodeUpdate();
+			consoleResult = []
 		} else {
 			throw new Error('Failed to load the editor');
 		}
@@ -29,9 +36,9 @@
 
 	const subscribeToCodeUpdate = () => {
 		// Didn't read the library code.
-		flask.onUpdate((code) => {
-			errorMessages = lint(code);
-			console.log(errorMessages);
+		flask.onUpdate((newCode) => {
+			code = newCode
+			errorMessages = lint(newCode);
 		});
 	};
 
@@ -65,6 +72,7 @@
 			id=""
 			on:click={() => {
 				updateCode('');
+				consoleResult = []
 			}}>Clear</button
 		>
 		<button
@@ -93,6 +101,9 @@
 	</div>
 	<div id="result">
 		<span class="tag">Console</span>
+		{#each consoleResult as result}
+			<div class="console-message">{result}</div>
+    	{/each}
 	</div>
 	<div class="footer">Footer</div>
 </div>
@@ -177,10 +188,15 @@
 	#result {
 		grid-area: result;
 		position: relative;
-		padding: 80px 10px 10px 10px;
+		padding: 50px 10px 10px 10px;
 		border-left: solid 1px var(--border-color);
 		background-color: var(--background-color);
 		color: var(--text-color);
+	}
+
+	.console-message {
+		padding: 0.5rem 1rem;
+		border-bottom: solid 1px var(--border-color);
 	}
 
 	.footer {
