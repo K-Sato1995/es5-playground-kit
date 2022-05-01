@@ -1,9 +1,9 @@
 <script>
 	import CodeFlask from 'codeflask';
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate } from 'svelte';
 	import { about, defaultCode, terms } from '$lib/texts.js';
 	import lint from '$lib/eslint/index.js';
-	import MediaQuery from "$lib/mediaQuery.svelte";
+	import MediaQuery from '$lib/mediaQuery.svelte';
 	import '$lib/assets/highlight.css';
 
 	let editor;
@@ -30,6 +30,18 @@
 			consoleResult = [];
 		} else {
 			throw new Error('Failed to load the editor');
+		}
+	});
+
+	afterUpdate(() => {
+		// Directory access to doms: not sure if this is ok
+		if (lintErrors !== 0) {
+			const elements = document.getElementsByClassName('codeflask__lines__line');
+			lintErrors.forEach((err) => {
+				const line = err.line;
+				const errElement = elements[line - 1];
+				errElement.classList.add('editor-error');
+			});
 		}
 	});
 
@@ -138,8 +150,10 @@
 					updateCode(terms);
 				}}>利用規約</button
 			>
-			<a class="link-btn link" target="_blank" href="https://github.com/K-Sato1995/es5-playground-kit"
-				>GitHub</a
+			<a
+				class="link-btn link"
+				target="_blank"
+				href="https://github.com/K-Sato1995/es5-playground-kit">GitHub</a
 			>
 		</div>
 		<div class="copy-right">Copyright© K-Sato All Rights Reserved.</div>
@@ -162,6 +176,17 @@
 	:global(body) {
 		margin: 0;
 		padding: 0;
+	}
+
+	:global(.editor-error::before) {
+		content: '';
+		height: 7px;
+		width: 7px;
+		display: inline-block;
+		color: red;
+		background-color: red;
+		border-radius: 50%;
+		margin-right: 5px;
 	}
 
 	.mobile-warning {

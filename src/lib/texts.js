@@ -27,6 +27,7 @@ console.logの結果が右のConsoleに表示されます。
 */
 var msg = "Hello World"
 
+const test = "test"
 function greeting() {
   console.log(msg)
 }
