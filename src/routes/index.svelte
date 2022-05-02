@@ -83,6 +83,11 @@
 		return flask;
 	};
 
+	const copyToCilpBoard = () => {
+		navigator.clipboard.writeText(code);
+		alert('Codeをクリップボードにコピーしました');
+	};
+
 	const run = () => {
 		if (lintErrors.length !== 0) {
 			alert('未解決のエラーが存在します');
@@ -143,9 +148,13 @@
 	</div>
 	<div id="result" class="gutter-col gutter-col-1">
 		<span class="tag">Console</span>
-		{#each consoleResult as result}
-			<div class="console-message">{result}</div>
-		{/each}
+		{#if consoleResult.length === 0}
+			<div class="console-message">Message: No Logs</div>
+		{:else}
+			{#each consoleResult as result}
+				<div class="console-message">{result}</div>
+			{/each}
+		{/if}
 	</div>
 	<div class="footer">
 		<div class="footer-btns">
