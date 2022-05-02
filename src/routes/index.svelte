@@ -4,6 +4,8 @@
 	import { about, defaultCode, terms } from '$lib/texts.js';
 	import lint from '$lib/eslint/index.js';
 	import MediaQuery from '$lib/mediaQuery.svelte';
+	import Split from 'split-grid';
+
 	import '$lib/assets/highlight.css';
 
 	let editor;
@@ -31,6 +33,16 @@
 		} else {
 			throw new Error('Failed to load the editor');
 		}
+
+		Split({
+			minSize: 300,
+			columnGutters: [
+				{
+					track: 1,
+					element: document.querySelector('.gutter-col-1')
+				}
+			]
+		});
 	});
 
 	afterUpdate(() => {
@@ -94,7 +106,7 @@
 	{/if}
 </MediaQuery>
 
-<div class="main-container">
+<div class="main-container grid">
 	<div class="header">
 		<div class="title">ES5までしか使えなくてつらいJS Playground</div>
 		<div class="btns">
@@ -120,7 +132,7 @@
 
 	<div bind:this={editor} id="editor" />
 
-	<div id="lint-errors">
+	<div id="lint-errors" class="">
 		{#if executionErrors}
 			<code>ExecutionError: {executionErrors}</code>
 		{:else if lintErrors.length !== 0}
@@ -130,7 +142,7 @@
 		{/if}
 		<span class="tag">Errors</span>
 	</div>
-	<div id="result">
+	<div id="result" class="gutter-col gutter-col-1">
 		<span class="tag">Console</span>
 		{#each consoleResult as result}
 			<div class="console-message">{result}</div>

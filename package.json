@@ -28,6 +28,7 @@
 		"eslint4b": "^7.27.0",
 		"node-polyfill-webpack-plugin": "^1.1.4",
 		"path-browserify": "^1.0.1",
+		"split-grid": "^1.0.11",
 		"util": "^0.12.4"
 	},
 	"type": "module"
