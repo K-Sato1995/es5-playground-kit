@@ -119,9 +119,8 @@
 			<button
 				class="clear-btn"
 				on:click={() => {
-					updateCode('');
 					consoleResult = [];
-				}}>Clear</button
+				}}>Clear Log</button
 			>
 		</div>
 	</div>
